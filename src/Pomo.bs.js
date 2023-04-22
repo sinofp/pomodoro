@@ -72,6 +72,7 @@ function Pomo$TimeDisplay(props) {
               children: JsxRuntime.jsx("time", {
                     children: display
                   }),
+              className: "nes-text" + toCSS(props.mode),
               style: {
                 fontSize: "5rem"
               }
@@ -100,7 +101,8 @@ function Pomo$History(props) {
               children: JsxRuntime.jsx("ul", {
                     children: Belt_Array.mapWithIndex(props.history, (function (id, mode) {
                             return JsxRuntime.jsx("li", {
-                                        children: toString(mode)
+                                        children: toString(mode),
+                                        className: "nes-text" + toCSS(mode)
                                       }, String(id));
                           })),
                     className: "nes-list is-disc"
@@ -232,7 +234,8 @@ function Pomo(props) {
                       className: "title"
                     }),
                 JsxRuntime.jsx(Pomo$TimeDisplay, {
-                      remaining: total - passed | 0
+                      remaining: total - passed | 0,
+                      mode: mode
                     }),
                 JsxRuntime.jsx(Pomo$Progress, {
                       value: match$2[0],

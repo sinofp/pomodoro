@@ -33,12 +33,12 @@ module TimeDisplay = {
   let to2digits = x => (x > 9 ? "" : "0") ++ x->Belt.Int.toString
 
   @react.component
-  let make = (~remaining) => {
+  let make = (~remaining, ~mode) => {
     let min = remaining / 60
     let sec = remaining->mod(60)
     let display = min->to2digits ++ ":" ++ sec->to2digits
 
-    <p style={ReactDOM.Style.make(~fontSize="5rem", ())}>
+    <p className={"nes-text" ++ mode->Mode.toCSS} style={ReactDOM.Style.make(~fontSize="5rem", ())}>
       <time> {React.string(display)} </time>
     </p>
   }
@@ -57,9 +57,11 @@ module History = {
   let make = (~history) => {
     <div className="lists" style={ReactDOM.Style.make(~textAlign="left", ())}>
       <ul className="nes-list is-disc">
-        {Belt.Array.mapWithIndex(history, (id, mode) => {
-          <li key={id->Belt.Int.toString}> {mode->Mode.toString->React.string} </li>
-        })->React.array}
+        {Belt.Array.mapWithIndex(history, (id, mode) =>
+          <li key={id->Belt.Int.toString} className={"nes-text" ++ mode->Mode.toCSS}>
+            {mode->Mode.toString->React.string}
+          </li>
+        )->React.array}
       </ul>
     </div>
   }
@@ -127,7 +129,7 @@ let make = () => {
 
   <div className="nes-container with-title is-centered">
     <p className="title"> {title->string} </p>
-    <TimeDisplay remaining={total - passed} />
+    <TimeDisplay mode remaining={total - passed} />
     <Progress value=progress mode />
     {Work->buttonForMode}
     {ShortBreak->buttonForMode}
