@@ -102,8 +102,15 @@ let make = () => {
   useEffect3(_ => {
     let id = Js.Global.setTimeout(_ =>
       if !paused && passed < total {
+        // In Idle mode, passed always equal to total (0)
         let passed = passed + 1
         if passed == total {
+          // TODO check is focused
+          let _ = switch mode {
+          | Work => "Work period finished, time for a break!"
+          | ShortBreak => "Short break finished, time to work!"
+          | LongBreak | Idle => "Long break finished, time to work!"
+          }->Notification.make
           setHistory(history => [mode]->Belt.Array.concat(history))
           Idle->switchToMode
         } else {
@@ -115,7 +122,12 @@ let make = () => {
     Some(_ => id->Js.Global.clearTimeout)
   }, (passed, total, paused))
 
-  let onClick = (m, _) => m->switchToMode
+  let onClick = (m, _) => {
+    if Notification.permission == #default {
+      let _ = Notification.requestPermission()
+    }
+    m->switchToMode
+  }
 
   let title = switch mode {
   | Work => "Keep working!"

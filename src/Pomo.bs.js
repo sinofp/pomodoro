@@ -3,6 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as $$Notification from "./Notification.bs.js";
 import * as JsxRuntime from "react/jsx-runtime";
 
 function toString(x) {
@@ -180,6 +181,9 @@ function Pomo(props) {
                   }
                   var passed$1 = passed + 1 | 0;
                   if (passed$1 === total) {
+                    $$Notification.make(mode !== 1 ? (
+                            mode !== 0 ? "Long break finished, time to work!" : "Work period finished, time for a break!"
+                          ) : "Short break finished, time to work!");
                     Curry._1(setHistory, (function (history) {
                             return Belt_Array.concat([mode], history);
                           }));
@@ -221,6 +225,9 @@ function Pomo(props) {
     return JsxRuntime.jsx(Pomo$Button, {
                 disabled: paused,
                 onClick: (function (param) {
+                    if (Notification.permission === "default") {
+                      Notification.requestPermission();
+                    }
                     return switchToMode(m);
                   }),
                 class: m,
