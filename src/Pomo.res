@@ -38,7 +38,9 @@ module TimeDisplay = {
     let sec = remaining->mod(60)
     let display = min->to2digits ++ ":" ++ sec->to2digits
 
-    <p className={"nes-text" ++ mode->Mode.toCSS} style={ReactDOM.Style.make(~fontSize="5rem", ())}>
+    <p
+      className={"nes-text" ++ mode->Mode.toCSS}
+      style={ReactDOM.Style.make(~fontSize="clamp(1rem, 15vw, 3rem)", ())}>
       <time> {React.string(display)} </time>
     </p>
   }

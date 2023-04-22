@@ -76,7 +76,7 @@ function Pomo$TimeDisplay(props) {
                   }),
               className: "nes-text" + toCSS(props.mode),
               style: {
-                fontSize: "5rem"
+                fontSize: "clamp(1rem, 15vw, 3rem)"
               }
             });
 }
