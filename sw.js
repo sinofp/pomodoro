@@ -1,0 +1,1 @@
+// Empty Service Worker to enable showNotification

@@ -95,6 +95,11 @@ let make = () => {
     setProgress(_ => 0.)
   }
 
+  useEffect0(_ => {
+    let _ = "/sw.js"->Notification.ServiceWorkerRegistration.register
+    None
+  })
+
   useEffect1(_ => {
     setTotal(_ =>
       switch mode {

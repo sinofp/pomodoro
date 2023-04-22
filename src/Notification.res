@@ -6,16 +6,20 @@ external permission: permission = "permission"
 @val @scope("Notification")
 external requestPermission: unit => promise<permission> = "requestPermission"
 
-@val @scope("window")
-external focus: unit => unit = "focus"
+module ServiceWorkerRegistration = {
+  type t
 
-type t
+  @val @scope("navigator.serviceWorker")
+  external register: string => promise<t> = "register"
 
-@new external make': string => t = "Notification"
+  @val @scope("navigator.serviceWorker")
+  external ready: promise<t> = "ready"
 
-@set external onClick: (t, _ => unit) => unit = "onclick"
+  @send external showNotification: (t, string) => promise<unit> = "showNotification"
+}
 
 let make = title => {
-  let n = title->make'
-  n->onClick(_ => focus())
+  open Js.Promise2
+  open ServiceWorkerRegistration
+  let _ = ready->then(registration => registration->showNotification(title))
 }

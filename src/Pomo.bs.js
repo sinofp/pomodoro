@@ -161,6 +161,9 @@ function Pomo(props) {
           }));
   };
   React.useEffect((function () {
+          navigator.serviceWorker.register("/sw.js");
+        }), []);
+  React.useEffect((function () {
           Curry._1(setTotal, (function (param) {
                   switch (mode) {
                     case /* Work */0 :
