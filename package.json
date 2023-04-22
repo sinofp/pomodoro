@@ -12,7 +12,8 @@
   ],
   "dependencies": {
     "@rescript/react": "^0.11.0",
-    "nes.css": "^2.3.0"
+    "nes.css": "^2.3.0",
+    "worker-timers": "^7.0.64"
   },
   "devDependencies": {
     "esbuild": "^0.17.17",

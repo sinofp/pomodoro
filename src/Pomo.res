@@ -67,6 +67,12 @@ module History = {
   }
 }
 
+@module("worker-timers")
+external setTimeout: (unit => unit, int) => Js.Global.timeoutId = "setTimeout"
+
+@module("worker-timers")
+external clearTimeout: Js.Global.timeoutId => unit = "clearTimeout"
+
 @react.component
 let make = () => {
   open React
@@ -100,7 +106,7 @@ let make = () => {
   }, [mode])
 
   useEffect3(_ => {
-    let id = Js.Global.setTimeout(_ =>
+    let id = setTimeout(_ =>
       if !paused && passed < total {
         // In Idle mode, passed always equal to total (0)
         let passed = passed + 1
@@ -119,7 +125,7 @@ let make = () => {
         }
       }
     , 1 * 1000)
-    Some(_ => id->Js.Global.clearTimeout)
+    Some(_ => id->clearTimeout)
   }, (passed, total, paused))
 
   let onClick = (m, _) => {

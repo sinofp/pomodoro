@@ -4,6 +4,7 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as $$Notification from "./Notification.bs.js";
+import * as WorkerTimers from "worker-timers";
 import * as JsxRuntime from "react/jsx-runtime";
 
 function toString(x) {
@@ -175,7 +176,7 @@ function Pomo(props) {
                 }));
         }), [mode]);
   React.useEffect((function () {
-          var id = setTimeout((function (param) {
+          var id = WorkerTimers.setTimeout((function (param) {
                   if (!(!paused && passed < total)) {
                     return ;
                   }
@@ -198,7 +199,7 @@ function Pomo(props) {
                   }
                 }), 1000);
           return (function (param) {
-                    clearTimeout(id);
+                    WorkerTimers.clearTimeout(id);
                   });
         }), [
         passed,
